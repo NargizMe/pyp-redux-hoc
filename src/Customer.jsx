@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Table } from 'antd';
+import {addToFavoriteAction, emptyFavoriteAction} from './redux/action';
 
 function Customer() {
     const [orderData, setOrderData] = useState([]);
@@ -12,17 +13,17 @@ function Customer() {
     const favoritesData = useSelector(state => state);
 
     useEffect(() => {
-        (async () => {
-            const result = await axios('https://northwind.vercel.app/api/orders');
-            const response = result.data;
-            setOrderData(response);
-        })()
+      (async () => {
+        const result = await axios('https://northwind.vercel.app/api/orders');
+        const response = result.data;
+        setOrderData(response);
+      })()
     }, [])
 
 
     function handleFavorites(data){
         if(!favoritesData.includes(data)){
-            dispatch({type: 'ADD_TO_FAVORITES', payload: data});
+            dispatch(addToFavoriteAction(data));
             toast.success('Your orded added to Favorites!', {
               position: toast.POSITION.TOP_RIGHT,
             });
@@ -53,13 +54,13 @@ function Customer() {
           dataIndex: 'freight',
         },
         {
-            title: 'Add to Favorites',
-            dataIndex: 'add',
-            render: (text, record) => (
-                <button onClick={()=> handleFavorites(record)}>
-                  {"add"}
-                </button>
-            ),
+          title: 'Add to Favorites',
+          dataIndex: 'add',
+          render: (text, record) => (
+            <button onClick={()=> handleFavorites(record)}>
+              {"add"}
+            </button>
+          ),
         }
     ];
 

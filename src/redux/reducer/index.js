@@ -7,6 +7,9 @@ export const reducerCustomer = (state = [], action) => {
         case 'EMPTY_FAVORITES':
             return [];
         
+        case 'DELETE_SPECIFIC':
+            return [...action.payload];
+        
         default:
             return state;
     }
