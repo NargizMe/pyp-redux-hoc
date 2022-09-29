@@ -6,18 +6,27 @@ import Customer from './Customer';
 import Favorites from './Favorites';
 import { Routes, Route } from 'react-router-dom';
 import { Menu } from 'antd';
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const storeCustomer = createStore(reducerCustomer);
 
 
-const items1 = ['Home', 'Favorites'].map((key) => ({
-  key,
-  label: `${key}`,
-  onclick: () => {<Navigate to="/products" replace={true} />}
-}));
 
 function App() {
+  const navigate = useNavigate();
+  
+  const items1 = [
+  {
+    key: 'Home',
+    label: `Home`,
+    onClick: () => navigate("/")
+  },
+  {
+    key: 'Favorites',
+    label: `Favorites`,
+    onClick: () => navigate("/favorites")
+  }];
+  
   return (
     <Provider store = {storeCustomer}>
        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} items={items1} />

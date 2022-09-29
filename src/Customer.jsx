@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Table } from 'antd';
 
 function Customer() {
@@ -21,6 +23,14 @@ function Customer() {
     function handleFavorites(data){
         if(!favoritesData.includes(data)){
             dispatch({type: 'ADD_TO_FAVORITES', payload: data});
+            toast.success('Your orded added to Favorites!', {
+              position: toast.POSITION.TOP_RIGHT,
+            });
+        }
+        else {
+          toast.error('Your already have this in Favorites!', {
+            position: toast.POSITION.TOP_RIGHT,
+          });
         }
     }
     
@@ -57,6 +67,7 @@ function Customer() {
     <>
     <h1>Datas</h1>
       <Table columns={columns} dataSource={orderData} />
+      <ToastContainer />
     </>
   );
 }
